@@ -78,7 +78,7 @@ def resultTemplate(grammerData):
                     </div>
                     <p class="mb-1">{" ".join(grammerData['orgTextList'])}</p>
                 </a>
-                <button type="submit" class="btn btn-secondary mb-3 re-check-button">다시 검사</button>
+                <button type="submit" class="btn btn-secondary mb-3 re-check-button" onclick="location.href=/check/">다시 검사</button>
             </div>
         """
     else:
@@ -96,7 +96,7 @@ def resultTemplate(grammerData):
                     </div>
                     <p class="mb-1">{" ".join(grammerData['candTextList'])}</p>
                 </a>
-                <button type="submit" class="btn btn-secondary mb-3 re-check-button">다시 검사</button>
+                <button type="submit" class="btn btn-secondary mb-3 re-check-button" onclick="location.href=/check/">다시 검사</button>
             </div>
         """
     return resultTag
