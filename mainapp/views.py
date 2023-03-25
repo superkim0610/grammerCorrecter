@@ -5,6 +5,7 @@ from mainapp.grammerChecker import checkGrammer
 def HTMLTemplate(addition=""):
     return f"""
     <html>
+        <!--<link rel="shortcut icon" href="/favicon.ico"/>-->
         <!--fonts-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
