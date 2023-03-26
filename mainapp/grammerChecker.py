@@ -3,7 +3,6 @@ import json
 
 def getRequest(text):
     response = requests.post('http://164.125.7.61/speller/results', data={'text1': text})
-    print("*************",response.text,"*********")
     if "기술적 한계로 찾지 못한 맞춤법 오류나 문법 오류가 있을 수 있습니다." in response.text or not "data = [" in response.text:
         return []
     data = response.text.split('data = [', 1)[-1].rsplit('];', 1)[0]
@@ -39,5 +38,11 @@ def compareWithOrg(orgText, errData):
 def checkGrammer(orgText):
     errData = sorted(getRequest(orgText), key=lambda a: a["start"])
     data = compareWithOrg(orgText, errData)
-    print("*************",data,"*********")
+    
+    # logging system
+    print('--------------------------------')
+    print('orgText :', ' '.join(data['orgTextList']))
+    print('candText :', ' '.join(data['candTextList']))
+    print('--------------------------------')
+
     return data
