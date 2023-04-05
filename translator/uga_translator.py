@@ -119,6 +119,12 @@ def ugaToText(text):
             result += ugaToKor(char)
     return result
 
+def isUga(text):
+    text = text.replace('우', '')
+    text = text.replace('가', '')
+    text = text.replace(' ', '')
+    return text == ''
+
 def main():
     pass
 

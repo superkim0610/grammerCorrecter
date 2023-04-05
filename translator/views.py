@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_exempt
 from mainapp.grammerChecker import checkGrammer
+import uga_translator
 
 def HTMLTemplate(addition=""):
     navItemName = ["맞춤법", "우가우가"]
@@ -84,7 +85,7 @@ def index(request):
     return HttpResponse(HTMLTemplate())
 
 def develop(request):
-    print(request.GET['input'])
+    request.GET['input']
     HTML = """
     <html>
         <form>
