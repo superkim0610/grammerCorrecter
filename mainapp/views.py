@@ -72,7 +72,7 @@ def HTMLTemplate(addition=""):
             </nav>
             <div style="width:93%;margin:0 auto;margin-bottom:50px;">
                 <div class="alert alert-warning" role="alert">
-                    <a class="alert-link" href="/translator/">우가우가<a>
+                    <a class="alert-link" href="/translator/">우가우가<a> 개발중
                 </div>
             </div>
             {addition}

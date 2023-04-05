@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_exempt
 from mainapp.grammerChecker import checkGrammer
-import uga_translator
+import translator.uga_translator as ut
 
 def HTMLTemplate(addition=""):
     navItemName = ["맞춤법", "우가우가"]
@@ -73,10 +73,11 @@ def HTMLTemplate(addition=""):
             </nav>
             <div style="width:93%;margin:0 auto;margin-bottom:50px;">
                 <div class="alert alert-warning" role="alert">
-                    <a class="alert-link" href="/translator/">우가우가<a>
+                    <a class="alert-link" href="/translator/">우가우가<a> 개발중
                 </div>
             </div>
             {addition}
+            <a href="/translator/develop" style="text-align:center;">테스트 사이트 이용하기</a>
         </body>
     </html>
     """
@@ -85,12 +86,20 @@ def index(request):
     return HttpResponse(HTMLTemplate())
 
 def develop(request):
-    request.GET['input']
-    HTML = """
+    result = ''
+    if 'input_text' in request.GET.keys():
+        input_text = request.GET['input_text']
+        if ut.isUga(input_text):
+            result = ut.ugaToText(input_text)
+        else:
+            result = ut.textToUga(input_text)
+
+    HTML = f"""
     <html>
         <form>
-            <input name="input" type="text" />
+            <input name="input_text" type="text" placehold="아무거나 쓰던가 ㅋ" value="{input_text}"/>
             <button type="submit">submit</button>
+            <h3>{result}</h3>
         </form>
     </html>
     """
