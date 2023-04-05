@@ -3,6 +3,15 @@ from django.views.decorators.csrf import csrf_exempt
 from mainapp.grammerChecker import checkGrammer
 
 def HTMLTemplate(addition=""):
+    navItemName = ["맞춤법", "급식표", "홀짝"]
+    navItemHref = ["check", "meal", "even_odd"] 
+    navItem = [[navItemName[i], navItemHref[i]] for i in range(len(navItemName))]
+    navItemTag = lambda a, b: f"""
+                            <li class="nav-item">
+                                <a class="navbar-brand nav-link" href="/{b}/">
+                                    {a}
+                                </a>
+                            </li>"""
     return f"""
     <html>
         <!--<link rel="shortcut icon" href="/favicon.ico"/>-->
@@ -49,20 +58,23 @@ def HTMLTemplate(addition=""):
             </style>
         </head>
         <body>
-            <!--<nav class="navbar bg-body-tertiary bg-secondary">
-                <div class="container-fluid">
-                    <a class="navbar-brand text-white" href="#">
-                        현재의 맞춤법 검사기
-                    </a>
-                </div>
-            </nav>-->
-            <nav>
-                <div class="shadow p-3 mb-5 bg-white rounded">
-                    <a class="navbar-brand nav-text" href="#">
-                            현재의 맞춤법 검사기
-                    </a>
+            <nav class="navbar navbar-expand-lg bg-body-white" sytle="width:100%;">
+                <div class="shadow p-3 mb-5 bg-white rounded" style="width:100%;">
+                    <ul class="navbar-nav" style="width:auto;">
+                        <li class="nav-item">
+                            <a class="navbar-brand nav-text" href="/">
+                                현재의 맞춤법 검사기
+                            </a>
+                        </li>
+                        {"".join([navItemTag(i[0], i[1]) for i in navItem])}
+                    </ul>
                 </div>
             </nav>
+            <div style="width:93%;margin:0 auto;margin-bottom:50px;">
+                <div class="alert alert-warning" role="alert">
+                    급식표 기능 추가중!
+                </div>
+            </div>
             {addition}
         </body>
     </html>
@@ -114,19 +126,17 @@ def check(request):
     </form>
     """
     _formTag = """
-        <center>
-            <div style="width:60%;">
-                <form class="row g-3" action="/result/" method="POST">
-                    <div class="col-auto">
-                        <label for="inputText" class="visually-hidden">input text</label>
-                        <input type="text" class="form-control" id="inputText" placeholder="뭐라도 써봐" name="input_text">
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-secondary mb-3">검사</button>
-                    </div>
-                </form>
-            </div>
-        </center>
+        <div style="width:60%;margin:0 auto;">
+            <form class="row g-3" action="/result/" method="POST" sylte="width:0 auto;">
+                <div class="col-auto">
+                    <label for="inputText" class="visually-hidden">input text</label>
+                    <input type="text" class="form-control" id="inputText" placeholder="뭐라도 써봐" name="input_text">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary mb-3">검사</button>
+                </div>
+            </form>
+        </div>
     """
     return HttpResponse(HTMLTemplate(_formTag))
 

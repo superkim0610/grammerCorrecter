@@ -6,7 +6,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mainapp.urls')),
-    path('meal', include('SchoolMeal.urls')),
+    path('meal/', include('schoolmeal.urls')),
     # path('grammer/', include('mainapp.urls')),
     # path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
 ]
