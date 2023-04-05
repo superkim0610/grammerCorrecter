@@ -63,7 +63,7 @@ def HTMLTemplate(addition=""):
                     <ul class="navbar-nav" style="width:auto;">
                         <li class="nav-item">
                             <a class="navbar-brand nav-text" href="/">
-                                현재의 맞춤법 검사기
+                                현재의 우가우가 번역기
                             </a>
                         </li>
                         {"".join([navItemTag(i[0], i[1]) for i in navItem])}
@@ -80,69 +80,17 @@ def HTMLTemplate(addition=""):
     </html>
     """
 
-def resultTemplate(grammerData):
-    if grammerData['isErr'] == [False]:
-        resultTag = f"""
-            <div class="list-group list text center">
-                <a href="#" class="list-group-item list-group-item-action active list-group-item-primary" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">오류가 없습니다</h5>
-                    </div>
-                    <p class="mb-1">{" ".join(grammerData['orgTextList'])}</p>
-                </a>
-                <button type="submit" class="btn btn-secondary mb-3 re-check-button" onclick="location.href=/check/">다시 검사</button>
-            </div>
-        """
-    else:
-        resultTag = f"""
-            <div class="list-group list text-center">
-                <a href="#" class="list-group-item list-group-item-action active list-group-item-danger" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">수정 전</h5>
-                    </div>
-                    <p class="mb-1">{" ".join(grammerData['orgTextList'])}</p>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">수정 후</h5>
-                    </div>
-                    <p class="mb-1">{" ".join(grammerData['candTextList'])}</p>
-                </a>
-                <button type="submit" class="btn btn-secondary mb-3 re-check-button" onclick="location.href=/check/">다시 검사</button>
-            </div>
-        """
-    return resultTag
-
-@csrf_exempt
 def index(request):
-    return redirect('./check/')
+    return HttpResponse(HTMLTemplate())
 
-@csrf_exempt
-def check(request):
-    formTag = """
-    <form action="/result/" method="POST">
-        <input type="text" name="input_text"/>
-        <button type="submit">submit</button>
-    </form>
+def develop(request):
+    print(request.GET['input'])
+    HTML = """
+    <html>
+        <form>
+            <input name="input" type="text" />
+            <button type="submit">submit</button>
+        </form>
+    </html>
     """
-    _formTag = """
-        <div style="width:60%;margin:0 auto;">
-            <form class="row g-3" action="/result/" method="POST" sylte="width:0 auto;">
-                <div class="col-auto">
-                    <label for="inputText" class="visually-hidden">input text</label>
-                    <input type="text" class="form-control" id="inputText" placeholder="뭐라도 써봐" name="input_text">
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-secondary mb-3">검사</button>
-                </div>
-            </form>
-        </div>
-    """
-    return HttpResponse(HTMLTemplate(_formTag))
-
-@csrf_exempt
-def result(request):
-    input_text = request.POST["input_text"]
-    grammerData = checkGrammer(input_text)
-    resultTag = resultTemplate(grammerData)
-    return HttpResponse(HTMLTemplate(resultTag))
+    return HttpResponse(HTML)
